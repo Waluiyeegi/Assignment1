@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Agent extends Thread{
+public class Agent implements Runnable{
 
     IngredientsGiven ingredientsGiven;
     Counter counter;
@@ -10,8 +10,9 @@ public class Agent extends Thread{
     }
     public void run(){
         for (int n = 1; n <= 20; n++) {
-            System.out.println("waiting \n");
-            while (counter.isEmpty() == false){}
+            //System.out.println("waiting \n");
+            while (!counter.isEmpty()){}
+            //System.out.println("waiting 2\n");
             Random rand = new Random();
             int randomNumber = rand.nextInt(3);
             switch (randomNumber){

@@ -32,7 +32,7 @@ public class Counter {
         // Mark the box as empty.
         contents = null;
         empty = true;
-        System.out.println("got " + obj.toString() + " from the counter" + "\n");
+        System.out.println("got " + obj.toString() + " from the counter and on " + Thread.currentThread().getName() + "\n");
         notifyAll();
         return obj;
     }
