@@ -6,6 +6,8 @@ public class Counter {
      */
     private boolean empty = true;
 
+    private int increment = 1;
+
     public synchronized void put(IngredientsGiven obj) {
         while (!empty) {
             try {
@@ -20,8 +22,8 @@ public class Counter {
         notifyAll();
     }
 
-    public synchronized IngredientsGiven get() {
-        while (empty) {
+    public synchronized IngredientsGiven get(Ingredients infiniteIngredient) {
+        while (empty || infiniteIngredient == contents.getIngredient1() || infiniteIngredient == contents.getIngredient2()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -29,12 +31,15 @@ public class Counter {
             }
         }
         IngredientsGiven obj = contents;
+
         // Mark the box as empty.
         contents = null;
         empty = true;
-        System.out.println("got " + obj.toString() + " from the counter and on " + Thread.currentThread().getName() + "\n");
+        System.out.println("got " + obj.toString() + " from the counter and on " + Thread.currentThread().getName() + ".  This is my " + increment + " coffee.\n");
+        increment++;
         notifyAll();
         return obj;
+
     }
 
     public IngredientsGiven seeIngredients(){
